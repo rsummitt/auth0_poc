@@ -1,0 +1,14 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:12.1-alpine"
+    environment:
+      - POSTGRES_USER=test_user
+      - POSTGRES_PASSWORD=test1234
+      - POSTGRES_DB=test_db
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgres
+      - ./migrations/:/docker-entrypoint-initdb.d/
