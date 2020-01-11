@@ -7,12 +7,13 @@ const ExternalApi = () => {
   const [showResult, setShowResult] = useState(false);
   const [apiMessage, setApiMessage] = useState("");
   const { getTokenSilently } = useAuth0();
+  const BASE_URL = process.env.API_BASE_URL
 
   const callApi = async () => {
     try {
       const token = await getTokenSilently();
 
-      const response = await fetch("/api/external", {
+      const response = await fetch(BASE_URL + "/api/external", {
         headers: {
           Authorization: `Bearer ${token}`
         }
