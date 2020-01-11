@@ -1,4 +1,4 @@
-FROM node:13.6.0-alpine3.10
+FROM node:13.6.0-alpine3.10 as build-deps
 WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn

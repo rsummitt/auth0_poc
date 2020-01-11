@@ -1,6 +1,11 @@
 version: "3"
 services:
 
+  fe:
+    build: ./auth-zero-fe/
+    ports:
+      - "80:80"
+
   mongo:
     image: "mongo:3.4.23"
     environment: 
