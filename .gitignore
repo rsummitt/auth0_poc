@@ -24,3 +24,4 @@ yarn-error.log*
 
 auth_config.json
 docker.env
+.env

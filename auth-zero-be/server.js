@@ -34,4 +34,4 @@ app.get("/api/external", checkJwt, (req, res) => {
 });
 
 // Start the app
-app.listen(process.env.PORT, () => console.log('API listening on' + process.env.PORT));
+app.listen(process.env.PORT, () => console.log('API listening on: ' + process.env.PORT));
