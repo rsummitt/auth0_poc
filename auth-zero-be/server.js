@@ -33,5 +33,17 @@ app.get("/api/external", checkJwt, (req, res) => {
   });
 });
 
+app.get("/api/alter-egos", checkJwt, (req, res) => {
+    res.send({
+        // Use Postgres to retreive and send back alter_egos
+    });
+});
+
+app.get("/api/heroes", checkJwt, (req, res) => {
+    res.send({
+        // Use MongoDB to retrieve heroes
+    })
+});
+
 // Start the app
 app.listen(process.env.PORT, () => console.log('API listening on: ' + process.env.PORT));
