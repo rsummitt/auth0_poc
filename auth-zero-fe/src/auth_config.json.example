@@ -2,4 +2,5 @@
 {
     "domain": "{DOMAIN}",
     "clientId": "{CLIENT ID}"
+    "audience": "{YOUR_API_IDENTIFIER}"
  }
