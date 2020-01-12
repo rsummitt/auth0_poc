@@ -18,6 +18,8 @@ services:
     environment: 
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./db/mongo/:/docker-entrypoint-initdb.d/
 
   mongo-express:
     image: "mongo-express" 
@@ -38,4 +40,4 @@ services:
       - "5432:5432"
     volumes:
       - /var/lib/postgres
-      - ./migrations/:/docker-entrypoint-initdb.d/
+      - ./db/pg/:/docker-entrypoint-initdb.d/
