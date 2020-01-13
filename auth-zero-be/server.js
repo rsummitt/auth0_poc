@@ -11,6 +11,18 @@ const authConfig = {
   audience: process.env.AUDIENCE
 };
 
+const pgConfig = {
+    host: process.env.POSTGRES_HOST,
+    port: process.env.POSTGRES_PORT,
+    database: process.env.POSTGRES_DB,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD
+}
+
+// Set up Postgres Connection
+const pgp = require('pg-promise')();
+const pgDb = pgp(pgConfig);
+
 // Define middleware that validates incoming bearer tokens
 // using JWKS from rob-s.auth0.com
 const checkJwt = jwt({
@@ -31,6 +43,22 @@ app.get("/api/external", checkJwt, (req, res) => {
   res.send({
     msg: "Your Access Token was successfully validated!"
   });
+});
+
+app.get("/api/alter-egos", checkJwt, (req, res) => {
+        pgDb.any('SELECT * FROM alter_egos', [true])
+        .then(function(data){
+            res.send(data);
+        })
+        .catch(function(error){
+            res.send(error);
+        });
+});
+
+app.get("/api/heroes", checkJwt, (req, res) => {
+    res.send({
+        // Use MongoDB to retrieve heroes
+    })
 });
 
 // Start the app

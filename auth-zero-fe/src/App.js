@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import { Router, Route, Switch } from "react-router-dom";
 import Profile from "./components/Profile";
 import ExternalApi from "./components/ExternalApi";
+import AlterEgosApi from "./components/AlterEgosApi";
 import history from "./utils/history";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" exact />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/external-api" component={ExternalApi} />
+          <PrivateRoute path="/alter-egos" component={AlterEgosApi} />
         </Switch>
       </Router>
     </div>
