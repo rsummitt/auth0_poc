@@ -19,9 +19,14 @@ const pgConfig = {
     password: process.env.POSTGRES_PASSWORD
 }
 
+const mongoUrl = `mongo://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
+
 // Set up Postgres Connection
 const pgp = require('pg-promise')();
 const pgDb = pgp(pgConfig);
+
+// Setup MongoDB Connection
+const mongo = require('mongodb').MongoClient
 
 // Define middleware that validates incoming bearer tokens
 // using JWKS from rob-s.auth0.com
@@ -56,8 +61,15 @@ app.get("/api/alter-egos", checkJwt, (req, res) => {
 });
 
 app.get("/api/heroes", checkJwt, (req, res) => {
-    res.send({
-        // Use MongoDB to retrieve heroes
+    mongo.connect(mongoUrl, function (err, client) {
+        if(err) throw err
+
+        var db = client.db('heroes')
+
+        db.collection('identity').find().toArray(function (err, result) {
+            if(err) throw err
+            res.send(result)
+        })
     })
 });
 
