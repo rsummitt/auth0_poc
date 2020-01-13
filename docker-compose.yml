@@ -12,6 +12,8 @@ services:
       - ./auth-zero-be/docker.env
     ports:
       - "3001:3001"
+    depends_on: 
+      - pgdb
 
   mongo:
     image: "mongo:3.4.23"
@@ -29,7 +31,7 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
 
-  postgres:
+  pgdb:
     image: "postgres:12.1-alpine"
     environment:
       - POSTGRES_USER=test_user
@@ -39,5 +41,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - /var/lib/postgres
       - ./db/pg/:/docker-entrypoint-initdb.d/

@@ -11,15 +11,17 @@ const authConfig = {
   audience: process.env.AUDIENCE
 };
 
-// Set up Postgres Connection
-const pgp = require('pg-promise')();
-const pgDb = pgp({
+const pgConfig = {
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT,
     database: process.env.POSTGRES_DB,
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD
-});
+}
+
+// Set up Postgres Connection
+const pgp = require('pg-promise')();
+const pgDb = pgp(pgConfig);
 
 // Define middleware that validates incoming bearer tokens
 // using JWKS from rob-s.auth0.com
@@ -44,7 +46,7 @@ app.get("/api/external", checkJwt, (req, res) => {
 });
 
 app.get("/api/alter-egos", checkJwt, (req, res) => {
-        postgresDB.any('SELECT * FROM alter_egos', [true])
+        pgDb.any('SELECT * FROM alter_egos', [true])
         .then(function(data){
             res.send(data);
         })
