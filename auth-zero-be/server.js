@@ -19,7 +19,15 @@ const pgConfig = {
     password: process.env.POSTGRES_PASSWORD
 }
 
-const mongoUrl = `mongo://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
+const mongoConfig = {
+    host: process.env.MONGO_HOST,
+    port: process.env.MONGO_PORT,
+    database: process.env.MONGO_DB,
+    user: process.env.MONGO_USER,
+    password: process.env.MONGO_PASSWORD
+}
+
+const mongoUrl = `mongodb://${mongoConfig.user}:${mongoConfig.password}@${mongoConfig.host}:${mongoConfig.port}`;
 
 // Set up Postgres Connection
 const pgp = require('pg-promise')();
