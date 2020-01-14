@@ -58,6 +58,7 @@ app.get("/api/external", checkJwt, (req, res) => {
   });
 });
 
+// Define an endpoint that uses Postgres
 app.get("/api/alter-egos", checkJwt, (req, res) => {
         pgDb.any('SELECT * FROM alter_egos', [true])
         .then(function(data){
@@ -68,6 +69,7 @@ app.get("/api/alter-egos", checkJwt, (req, res) => {
         });
 });
 
+// Define an endpoint that uses Mongo
 app.get("/api/heroes", checkJwt, (req, res) => {
     mongo.connect(mongoUrl, function (err, client) {
         if(err) throw err
