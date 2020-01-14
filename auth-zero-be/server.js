@@ -23,8 +23,8 @@ const mongoConfig = {
     host: process.env.MONGO_HOST,
     port: process.env.MONGO_PORT,
     database: process.env.MONGO_DB,
-    user: process.env.MONGO_USER,
-    password: process.env.MONGO_PASSWORD
+    user: process.env.MONGO_INITDB_ROOT_USERNAME,
+    password: process.env.MONGO_INITDB_ROOT_PASSWORD
 }
 
 const mongoUrl = `mongodb://${mongoConfig.user}:${mongoConfig.password}@${mongoConfig.host}:${mongoConfig.port}`;
@@ -37,7 +37,6 @@ const pgDb = pgp(pgConfig);
 const mongo = require('mongodb').MongoClient
 
 // Define middleware that validates incoming bearer tokens
-// using JWKS from rob-s.auth0.com
 const checkJwt = jwt({
   secret: jwksRsa.expressJwtSecret({
     cache: true,
@@ -74,7 +73,7 @@ app.get("/api/heroes", checkJwt, (req, res) => {
     mongo.connect(mongoUrl, function (err, client) {
         if(err) throw err
 
-        var db = client.db('heroes')
+        var db = client.db(mongoConfig.database)
 
         db.collection('identity').find().toArray(function (err, result) {
             if(err) throw err
